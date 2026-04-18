@@ -1,0 +1,69 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getEntry } from "astro:content";
+
+const homeEntry = await getEntry("pages", "home");
+const data = homeEntry.data;
+const heroImage =
+  data.carousel && data.carousel.length > 0
+    ? data.carousel[0].image
+    : "/images/default-image.jpg";
+---
+
+<Layout title="LaEventers - Premium Event Planning">
+  <section class="hero-section">
+    <div class="hero-bg">
+      <img src={heroImage} alt="Event Background" />
+    </div>
+    <div class="container hero-content animate-fade-in-up">
+      <span class="hero-badge">Est. 2026</span>
+      <h1 class="hero-title">
+        {data.intro_title.split(" & ")[0]} &amp; <br />
+        <span class="highlight"
+          >{data.intro_title.split(" & ")[1] || "Beyond"}
+        </span>
+      </h1>
+      <p class="hero-subtitle delay-100 animate-fade-in-up">
+        {data.intro_description}
+      </p>
+      <a href="/contact" class="button delay-200 animate-fade-in-up"
+        >Plan Your Dream Event</a
+      >
+    </div>
+  </section>
+
+  <section class="image-grid">
+    {
+      data.carousel &&
+        data.carousel.slice(0, 3).map((item: any, index: number) => (
+          <div class={`image-cell cell-${index + 1}`}>
+            <img src={item.image} alt={item.title} loading="lazy" />
+          </div>
+        ))
+    }
+  </section>
+
+  <section class="features-section">
+    <div class="container">
+      <header class="section-header">
+        <h2 class="section-title">Our Services</h2>
+        <p>
+          From conceptualization to execution, we deliver an unforgettable
+          experience.
+        </p>
+      </header>
+      <div class="grid">
+        {
+          data.features &&
+            data.features.map((feature: any) => (
+              <div class="glass-card">
+                <div class="icon-wrapper" set:html={feature.icon_svg} />
+                <h3>{feature.title}</h3>
+                <p>{feature.description}</p>
+              </div>
+            ))
+        }
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,19 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getEntry } from 'astro:content';
+
+const aboutEntry = await getEntry('pages', 'about');
+const data = aboutEntry.data;
+---
+
+<Layout title="LaEventers - About Us">
+  <div class="container" style="padding: 4rem 2rem; max-width: 800px;">
+    <h1 style="text-align: center; margin-bottom: 2rem;">{data.title}</h1>
+    {data.hero_image && (
+      <img src={data.hero_image} alt="About Us" style="width: 100%; border-radius: 20px; margin-bottom: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.1);" />
+    )}
+    <div class="glass-card" style="font-size: 1.1rem; line-height: 1.8;">
+      <p>{data.body || 'Welcome to LaEventers. We dedicate ourselves to crafting beautiful memories.'}</p>
+    </div>
+  </div>
+</Layout>

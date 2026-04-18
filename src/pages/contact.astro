@@ -1,0 +1,31 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getEntry } from 'astro:content';
+
+const contactEntry = await getEntry('pages', 'contact');
+const data = contactEntry.data;
+---
+
+<Layout title="LaEventers - Contact Us">
+  <div class="container" style="padding: 4rem 2rem; max-width: 800px; text-align: center;">
+    <h1 style="margin-bottom: 2rem;">{data.title}</h1>
+    
+    <div class="glass-card">
+      <div style="margin-bottom: 2rem; display: flex; flex-direction: column; gap: 1rem;">
+        {data.email && (
+        <div style="font-size: 1.25rem;">
+          <strong>Email: </strong> <a href={`mailto:${data.email}`} style="color: var(--accent); text-decoration: none;">{data.email}</a>
+        </div>
+        )}
+        {data.phone && (
+        <div style="font-size: 1.25rem;">
+          <strong>Phone: </strong> <a href={`tel:${data.phone}`} style="color: var(--accent); text-decoration: none;">{data.phone}</a>
+        </div>
+        )}
+      </div>
+      <p style="font-size: 1.1rem; color: var(--text-muted); margin-top: 2rem;">
+        {data.body || 'Reach out to us to start planning your dream event today. Our dedicated team is ready to bring your vision to life.'}
+      </p>
+    </div>
+  </div>
+</Layout>
