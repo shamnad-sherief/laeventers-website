@@ -235,10 +235,10 @@ h6 {
 
 /* UI Cards */
 .glass-card {
-  background: rgba(255, 255, 255, 0.8);
+  background: var(--glass-bg);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-xl);
   padding: 3rem 2.5rem;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -335,7 +335,7 @@ h6 {
 .hero-badge {
   display: inline-block;
   padding: 0.5rem 1.25rem;
-  background: rgba(255, 255, 255, 0.9);
+  background: var(--glass-bg);
   border: 1px solid rgba(255, 90, 130, 0.2);
   border-radius: 9999px;
   font-size: 0.875rem;
@@ -482,4 +482,49 @@ footer {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+@media (max-width: 768px) {
+  /* Snappier animations for mobile focus */
+  .animate-fade-in-up {
+    animation-duration: 0.5s !important;
+  }
+  
+  .delay-100 { animation-delay: 50ms !important; }
+  .delay-200 { animation-delay: 100ms !important; }
+  .delay-300 { animation-delay: 150ms !important; }
+
+  /* Typography and Layout Constraints */
+  .hero-title {
+    font-size: 2.75rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.15rem;
+  }
+
+  .hero-section {
+    padding: 6rem 1.5rem 4rem;
+    min-height: 60vh;
+  }
+
+  .glass-header {
+    padding: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .nav-links {
+    gap: 1.5rem;
+    width: 100%;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+
+  .grid {
+    gap: 1.5rem;
+  }
+
+  .glass-card {
+    padding: 2rem 1.5rem;
+  }
 }
