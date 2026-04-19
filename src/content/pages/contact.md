@@ -1,5 +1,5 @@
 ---
-email: SSHAMNAD
+email: chakku
 phone: +91 [PHONE_NUMBER]
 title: Get in Touch
 ---
