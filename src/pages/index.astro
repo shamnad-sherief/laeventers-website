@@ -3,6 +3,9 @@ import Layout from "../layouts/Layout.astro";
 import { getEntry } from "astro:content";
 
 const homeEntry = await getEntry("pages", "home");
+if (!homeEntry) {
+  throw new Error("Home content entry not found!");
+}
 const data = homeEntry.data;
 const heroImage =
   data.carousel && data.carousel.length > 0

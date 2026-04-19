@@ -3,29 +3,162 @@ import Layout from '../layouts/Layout.astro';
 import { getEntry } from 'astro:content';
 
 const contactEntry = await getEntry('pages', 'contact');
+if (!contactEntry) {
+  throw new Error("Contact content entry not found!");
+}
 const data = contactEntry.data;
 ---
 
 <Layout title="LaEventers - Contact Us">
-  <div class="container" style="padding: 4rem 2rem; max-width: 800px; text-align: center;">
-    <h1 style="margin-bottom: 2rem;">{data.title}</h1>
+  <div class="container contact-container">
+    <h1 class="page-title">{data.title}</h1>
     
-    <div class="glass-card">
-      <div style="margin-bottom: 2rem; display: flex; flex-direction: column; gap: 1rem;">
+    <div class="glass-card contact-card">
+      <div class="contact-info">
         {data.email && (
-        <div style="font-size: 1.25rem;">
-          <strong>Email: </strong> <a href={`mailto:${data.email}`} style="color: var(--accent); text-decoration: none;">{data.email}</a>
+        <div class="info-item">
+          <strong>Email: </strong> <a href={`mailto:${data.email}`}>{data.email}</a>
         </div>
         )}
         {data.phone && (
-        <div style="font-size: 1.25rem;">
-          <strong>Phone: </strong> <a href={`tel:${data.phone}`} style="color: var(--accent); text-decoration: none;">{data.phone}</a>
+        <div class="info-item">
+          <strong>Phone: </strong> <a href={`tel:${data.phone}`}>{data.phone}</a>
         </div>
         )}
       </div>
-      <p style="font-size: 1.1rem; color: var(--text-muted); margin-top: 2rem;">
+      <p class="contact-desc">
         {data.body || 'Reach out to us to start planning your dream event today. Our dedicated team is ready to bring your vision to life.'}
       </p>
+
+      <form class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <p class="hidden" style="display: none;">
+          <label>Don’t fill this out if you're human: <input name="bot-field" /></label>
+        </p>
+        <input type="hidden" name="form-name" value="contact" />
+        
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" name="name" class="form-control" required placeholder="Jane Doe" />
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" class="form-control" required placeholder="jane@example.com" />
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message / Details</label>
+          <textarea id="message" name="message" class="form-control" rows="5" required placeholder="Tell us about your dream event..."></textarea>
+        </div>
+
+        <button type="submit" class="button submit-btn">Send Message</button>
+      </form>
     </div>
   </div>
 </Layout>
+
+<style>
+  .contact-container {
+    padding: 6rem 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+  }
+  .page-title {
+    font-size: 3.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .contact-card {
+    padding: 3rem 4rem;
+  }
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .info-item {
+    font-size: 1.25rem;
+  }
+  .info-item a {
+    color: var(--accent-primary);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .contact-desc {
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    margin-bottom: 3rem;
+  }
+  
+  /* Form Styles */
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: left;
+    border-top: 1px solid var(--glass-border);
+    padding-top: 3rem;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .form-group label {
+    font-weight: 600;
+    color: var(--text-main);
+    font-size: 0.95rem;
+  }
+  .form-control {
+    padding: 1rem 1.25rem;
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+    background: rgba(255, 255, 255, 0.5);
+    color: var(--text-main);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+  }
+  .form-control::placeholder {
+    color: var(--text-muted);
+    opacity: 0.6;
+  }
+  .form-control:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0 0 4px rgba(255, 90, 130, 0.15);
+  }
+  .submit-btn {
+    margin-top: 1rem;
+    width: 100%;
+    padding: 1.25rem;
+    font-size: 1.15rem;
+  }
+
+  /* Dark mode scoped form styles */
+  :global([data-theme="dark"]) .form-control {
+    background: rgba(0, 0, 0, 0.2);
+    border-color: rgba(255,255,255,0.05);
+  }
+  :global([data-theme="dark"]) .form-control:focus {
+    background: rgba(0, 0, 0, 0.4);
+    border-color: var(--accent-primary);
+  }
+
+  @media (max-width: 768px) {
+    .contact-container {
+      padding: 4rem 1rem;
+    }
+    .page-title {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .contact-card {
+      padding: 2rem 1.5rem;
+    }
+  }
+</style>
