@@ -1,8 +1,8 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { getEntry } from 'astro:content';
+import Layout from "../layouts/Layout.astro";
+import { getEntry } from "astro:content";
 
-const contactEntry = await getEntry('pages', 'contact');
+const contactEntry = await getEntry("pages", "contact");
 if (!contactEntry) {
   throw new Error("Contact content entry not found!");
 }
@@ -12,43 +12,80 @@ const data = contactEntry.data;
 <Layout title="LaEventers - Contact Us">
   <div class="container contact-container">
     <h1 class="page-title">{data.title}</h1>
-    
+
     <div class="glass-card contact-card">
       <div class="contact-info">
-        {data.email && (
-        <div class="info-item">
-          <strong>Email: </strong> <a href={`mailto:${data.email}`}>{data.email}</a>
-        </div>
-        )}
-        {data.phone && (
-        <div class="info-item">
-          <strong>Phone: </strong> <a href={`tel:${data.phone}`}>{data.phone}</a>
-        </div>
-        )}
+        {
+          data.email && (
+            <div class="info-item">
+              <strong>Email: </strong>{" "}
+              <a href={`mailto:${data.email}`}>{data.email}</a>
+            </div>
+          )
+        }
+        {
+          data.phone && (
+            <div class="info-item">
+              <strong>Phone: </strong>{" "}
+              <a href={`tel:${data.phone}`}>{data.phone}</a>
+            </div>
+          )
+        }
       </div>
       <p class="contact-desc">
-        {data.body || 'Reach out to us to start planning your dream event today. Our dedicated team is ready to bring your vision to life.'}
+        {
+          data.body ||
+            "Reach out to us to start planning your dream event today. Our dedicated team is ready to bring your vision to life."
+        }
       </p>
 
-      <form class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <form
+        class="contact-form"
+        name="contact"
+        method="POST"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+      >
         <p class="hidden" style="display: none;">
-          <label>Don’t fill this out if you're human: <input name="bot-field" /></label>
+          <label
+            >Don’t fill this out if you're human: <input name="bot-field" />
+          </label>
         </p>
         <input type="hidden" name="form-name" value="contact" />
-        
+
         <div class="form-group">
           <label for="name">Your Name</label>
-          <input type="text" id="name" name="name" class="form-control" required placeholder="Jane Doe" />
+          <input
+            type="text"
+            id="name"
+            name="name"
+            class="form-control"
+            required
+            placeholder="Jane Doe"
+          />
         </div>
-        
+
         <div class="form-group">
           <label for="email">Email Address</label>
-          <input type="email" id="email" name="email" class="form-control" required placeholder="jane@example.com" />
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="form-control"
+            required
+            placeholder="jane@example.com"
+          />
         </div>
 
         <div class="form-group">
           <label for="message">Message / Details</label>
-          <textarea id="message" name="message" class="form-control" rows="5" required placeholder="Tell us about your dream event..."></textarea>
+          <textarea
+            id="message"
+            name="message"
+            class="form-control"
+            rows="5"
+            required
+            placeholder="Tell us about your dream event..."></textarea>
         </div>
 
         <button type="submit" class="button submit-btn">Send Message</button>
@@ -92,7 +129,7 @@ const data = contactEntry.data;
     color: var(--text-muted);
     margin-bottom: 3rem;
   }
-  
+
   /* Form Styles */
   .contact-form {
     display: flex;
@@ -142,7 +179,7 @@ const data = contactEntry.data;
   /* Dark mode scoped form styles */
   :global([data-theme="dark"]) .form-control {
     background: rgba(0, 0, 0, 0.2);
-    border-color: rgba(255,255,255,0.05);
+    border-color: rgba(255, 255, 255, 0.05);
   }
   :global([data-theme="dark"]) .form-control:focus {
     background: rgba(0, 0, 0, 0.4);
