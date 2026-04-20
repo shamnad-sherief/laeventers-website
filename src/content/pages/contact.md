@@ -1,5 +1,5 @@
 ---
-email: chakku
+email: sakku
 phone: +91 [PHONE_NUMBER]
 title: Get in Touch
 ---
