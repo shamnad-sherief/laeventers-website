@@ -35,6 +35,9 @@ const { title } = Astro.props;
         <a href="/about" class={Astro.url.pathname === "/about" ? "active" : ""}
           >About</a
         >
+        <a href="/menu" class={Astro.url.pathname === "/menu" ? "active" : ""}
+          >Menu</a
+        >
         <a
           href="/contact"
           class={Astro.url.pathname === "/contact" ? "active" : ""}>Contact</a
@@ -88,6 +91,13 @@ const { title } = Astro.props;
           </svg>
         </button>
       </nav>
+      <button id="mobile-menu-toggle" class="mobile-toggle" aria-label="Toggle Menu">
+        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
     </header>
 
     <main>
@@ -128,6 +138,13 @@ const { title } = Astro.props;
         document.documentElement.setAttribute("data-theme", newTheme);
         localStorage.setItem("theme", newTheme);
         updateIcons();
+      });
+
+      const mobileToggle = document.getElementById("mobile-menu-toggle");
+      const navLinks = document.querySelector(".nav-links");
+
+      mobileToggle.addEventListener("click", () => {
+        navLinks.classList.toggle("mobile-active");
       });
 
       if (window.netlifyIdentity) {

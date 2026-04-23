@@ -36,3 +36,18 @@ collections:
           - {label: "Phone", name: "phone", widget: "string", required: false}
           - {label: "Title", name: "title", widget: "string"}
           - {label: "Content", name: "body", widget: "markdown"}
+
+      - file: "src/content/pages/menu.md"
+        label: "Menu Page"
+        name: "menu"
+        fields:
+          - {label: "Title", name: "title", widget: "string", default: "Our Exquisite Menu"}
+          - {label: "Hero Image", name: "hero_image", widget: "image"}
+          - {label: "Menu Categories", name: "menu_categories", widget: "list", fields: [
+              {label: "Category Name", name: "title", widget: "string"},
+              {label: "Items", name: "items", widget: "list", fields: [
+                {label: "Item Name", name: "name", widget: "string"},
+                {label: "Description", name: "description", widget: "text"},
+                {label: "Price / Info", name: "price_info", widget: "string", required: false}
+              ]}
+            ]}

@@ -1,0 +1,152 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getEntry } from "astro:content";
+
+const menuEntry = await getEntry("pages", "menu");
+
+if (!menuEntry) {
+  throw new Error("Menu content entry not found!");
+}
+
+const { title = "Our Menu", hero_image = "/images/hero_menu.png", menu_categories = [] } = (menuEntry as any).data;
+---
+
+<Layout title={`${title} - LaEventers`}>
+  <section class="hero-section mini-hero">
+    <div class="hero-bg">
+      <img src={hero_image} alt="Menu Background" />
+    </div>
+    <div class="container hero-content animate-fade-in-up">
+      <h1 class="hero-title">{title}</h1>
+      <p class="hero-subtitle">Taste the excellence in every bite</p>
+    </div>
+  </section>
+
+  <section class="menu-section">
+    <div class="container">
+      {menu_categories.map((category: any, catIndex: number) => (
+        <div class="menu-category-wrapper animate-fade-in-up" style={`animation-delay: ${catIndex * 100}ms`}>
+          <div class="category-header">
+            <h2 class="category-title">{category.title}</h2>
+            <div class="title-accent"></div>
+          </div>
+          
+          <div class="menu-grid">
+            {category.items.map((item: any) => (
+              <div class="menu-item-card glass-card">
+                <div class="item-details">
+                  <div class="item-header">
+                    <h3 class="item-name">{item.name}</h3>
+                    {item.price_info && <span class="item-price">{item.price_info}</span>}
+                  </div>
+                  <p class="item-description">{item.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <style>
+    .mini-hero {
+      min-height: 40vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .menu-section {
+      padding: 80px 0;
+      background: var(--bg-primary);
+    }
+
+    .menu-category-wrapper {
+      margin-bottom: 80px;
+    }
+
+    .category-header {
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .category-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .title-accent {
+      width: 60px;
+      height: 4px;
+      background: var(--accent-primary, #d4af37);
+      margin: 0 auto;
+      border-radius: 2px;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 30px;
+    }
+
+    .menu-item-card {
+      padding: 30px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .menu-item-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 15px;
+    }
+
+    .item-name {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 0;
+    }
+
+    .item-price {
+      font-family: var(--font-accent);
+      font-weight: 600;
+      color: var(--accent-primary, #d4af37);
+      font-size: 1rem;
+      white-space: nowrap;
+      margin-left: 15px;
+    }
+
+    .item-description {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    @media (max-width: 768px) {
+      .category-title {
+        font-size: 2rem;
+      }
+      
+      .menu-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</Layout>
